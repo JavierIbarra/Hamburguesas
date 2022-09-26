@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  backend_1:
+    container_name: backend_1
+    ports:
+      - 8001:8001
+    build: 
+      context: backend
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - ./backend/docker/1.env
+    depends_on:
+      - db
+
+  backend_2:
+    container_name: backend_2
+    ports:
+      - 8002:8002
+    build: 
+      context: backend
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - ./backend/docker/2.env
+    depends_on:
+      - db
+
+  nginx:
+    container_name: nginx
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - backend_1
+      - backend_2
+    links:
+      - backend_1:backend_1
+      - backend_2:backend_2
