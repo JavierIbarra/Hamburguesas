@@ -13,4 +13,4 @@ python manage.py migrate
 
 # Start server
 echo "Starting server"
-python manage.py runserver $WEB_PORT
+python manage.py runserver $WEB_HOST:$WEB_PORT

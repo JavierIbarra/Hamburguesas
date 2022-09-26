@@ -11,24 +11,24 @@ services:
   backend_1:
     container_name: backend_1
     ports:
-      - 8001:8001
+      - ${WEB_PORT_BACKEND_1}:${WEB_PORT_BACKEND_1}
     build: 
       context: backend
       dockerfile: ./docker/Dockerfile
     env_file:
-      - ./backend/docker/1.env
+      - ./backend/docker/backend_1/.env
     depends_on:
       - db
 
   backend_2:
     container_name: backend_2
     ports:
-      - 8002:8002
+      - ${WEB_PORT_BACKEND_2}:${WEB_PORT_BACKEND_2}
     build: 
       context: backend
       dockerfile: ./docker/Dockerfile
     env_file:
-      - ./backend/docker/2.env
+      - ./backend/docker/backend_2/.env
     depends_on:
       - db
 
