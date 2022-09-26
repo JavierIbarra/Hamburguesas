@@ -32,7 +32,6 @@
 
 5. Migrations
 
-        python manage.py makemigrations EP_Tutor
         python manage.py migrate 
 
 6. Run the app
