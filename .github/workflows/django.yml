@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "Milestone_1", "Milestone_2", "Milestone_3", "Milestone_4" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "Milestone_1", "Milestone_2", "Milestone_3", "Milestone_4" ]
 
 jobs:
   build:
