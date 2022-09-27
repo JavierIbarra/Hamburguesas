@@ -32,10 +32,22 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+      
     - name: Install Dependencies
+      env:
+        SECRET_KEY: ${{ secret.SECRET_KEY }}
+        DEBUG: ${{ secret.DEBUG }}
+        ALLOWED_HOSTS: ${{ secret.ALLOWED_HOSTS }}
+        DATABASE_URL: ${{ secret.DATABASE_URL }}
+        WEB_HOST: ${{ secret.WEB_HOST }}
+        WEB_PORT: ${{ secret.WEB_PORT }}
+        DATABASE_NAME: ${{ secret.DATABASE_NAME }}
+        POSTGRES_USER: ${{ secret.POSTGRES_USER }}
+        POSTGRES_PASS: ${{ secret.POSTGRES_PASS }}
       run: |
         python -m pip install --upgrade pip
         pip install -r backend/requirements.txt
+      
     - name: Run Tests
       run: |
         python backend/manage.py test
