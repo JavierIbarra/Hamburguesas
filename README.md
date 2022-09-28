@@ -1,5 +1,13 @@
 # Hamburguesas
 
+## Running using docker
+
+1. Create the **.env** files where the **env.example** files with the corresponding format exist
+
+2. Run docker compose
+
+       docker-compose up --build
+
 ## Setup for testing purposes
 
 1. Use **virtualenv** to create a virtual environment named **venv**
