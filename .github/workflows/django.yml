@@ -52,4 +52,4 @@ jobs:
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASS: ${{ secrets.POSTGRES_PASS }}
       run: |
-        python backend/manage.py test
+        python burgers/manage.py test
