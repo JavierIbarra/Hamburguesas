@@ -8,26 +8,30 @@ services:
     ports:
       - 5432:5432
 
-  backend_1:
-    container_name: backend_1
+  web_django:
+    container_name: web_django
     ports:
-      - ${WEB_PORT_1}:${WEB_PORT_1}
+      - 8001:8001
     env_file:
-      - ./backend/docker/backend_1/.env
+      - ./burgers/docker/.env
+    environment:
+      - WEB_PORT=8001
     build: 
-      context: backend
+      context: burgers
       dockerfile: ./docker/Dockerfile
     depends_on:
       - db
 
-  backend_2:
-    container_name: backend_2
+  web_django_2:
+    container_name: web_django_2
     ports:
-      - ${WEB_PORT_2}:${WEB_PORT_2}
+      - 8002:8002
     env_file:
-      - ./backend/docker/backend_2/.env
+      - ./burgers/docker/.env
+    environment:
+      - WEB_PORT=8002
     build: 
-      context: backend
+      context: burgers
       dockerfile: ./docker/Dockerfile
     depends_on:
       - db
@@ -40,8 +44,8 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - backend_1
-      - backend_2
+      - web_django
+      - web_django_2
     links:
-      - backend_1:backend_1
-      - backend_2:backend_2
+      - web_django:web_django
+      - web_django_2:web_django_2
