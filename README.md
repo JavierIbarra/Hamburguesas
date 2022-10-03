@@ -34,7 +34,6 @@
        ALLOWED_HOSTS=*
        DATABASE_URL=<postgresql://USER_DB:PASSWORD_DB@DB_HOST:DB_PORT/DB_NAME>
        WEB_HOST=<HOST>
-       WEB_PORT=<PORT>
        DATABASE_NAME=<postgres_database_name>
        POSTGRES_USER=<postgres_user>
        POSTGRES_PASS=<postgres_password>
