@@ -3,4 +3,5 @@ from . import views as app
 
 urlpatterns = [
     #path('', RedirectView.as_view(url='/accounts/login/')),
+    path('',app.home, name='home'),
 ]
