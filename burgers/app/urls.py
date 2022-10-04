@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views as app
+from .views import home
 
 urlpatterns = [
     #path('', RedirectView.as_view(url='/accounts/login/')),
-    path('',app.home, name='home'),
+    path('', home, name='home'),
 ]

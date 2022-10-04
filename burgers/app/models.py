@@ -28,31 +28,30 @@ class Event(models.Model):
         return str(self)
 
 
-class Catalogue(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    ingredients = models.ManyToManyField()
-
-    def __str__(self):
-        return str(self)
-
-
 class Ingredients(models.Model):
     KILOGRAMS = 'Kg'
     GRAMS = 'gr'
     LITERS = 'Lts'
     UNIT = 'Unt'
     MEASUREMENT_CHOICES = [
-        (KILOGRAMS, 'Kilograms')
-        (GRAMS, 'Grams')
-        (LITERS, 'Liters')
-        (UNIT, 'Unitary')
+        (KILOGRAMS, 'Kilograms'),
+        (GRAMS, 'Grams'),
+        (LITERS, 'Liters'),
+        (UNIT, 'Unitary'),
     ]
 
     name = models.CharField(max_length=200, null=False)
     amount = models.IntegerField(validators=[MinValueValidator(0)])
-    measurement = models.CharField(choices=MEASUREMENT_CHOICES, default=KILOGRAMS)
+    measurement = models.CharField(max_length=3, choices=MEASUREMENT_CHOICES, default=KILOGRAMS)
     unitary_cost = models.IntegerField(validators=[MinValueValidator(0)])
 
+
+    def __str__(self):
+        return str(self)
+
+class Catalogue(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    ingredients = models.ManyToManyField(Ingredients)
 
     def __str__(self):
         return str(self)

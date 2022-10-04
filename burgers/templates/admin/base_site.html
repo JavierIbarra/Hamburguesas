@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+<style>
+    #header{
+        background: #d96500; 
+    }
+    .module h2, .module caption, .inline-group h2{
+        background: #d96500;
+    }
+    #branding h1 a:visited {
+        color: #ffffff;
+    }
+    .button, input[type="submit"], input[type="button"], .submit-row input, a.button {
+        background: #d96500;
+    }
+</style>
+{% endblock extrastyle %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="https://www.elcorral.com/img/about/v2/Hamburguesa%20PNG.png" alt="Logo" height="50px" />
+        {{ site_header|default:_('Django administration') }}
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
