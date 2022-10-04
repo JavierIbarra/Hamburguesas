@@ -20,7 +20,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/',include('usermanager.urls')),
     path('',include('app.urls')),
-    path('user/',include('usermanager.urls'))
-
 ]
+
+admin.site.site_header = "Burger"
+admin.site.index_title = "Administration panel"
+admin.site.site_title = "Burger"

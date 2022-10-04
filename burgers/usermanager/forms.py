@@ -3,8 +3,11 @@ from cProfile import label
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Client, Administrator
 from django import forms
+
+"""
+from .models import Client, Administrator
+
 
 class NewClientForm(UserCreationForm):  
     #TODO: Check both methods.
@@ -21,3 +24,19 @@ class NewClientForm(UserCreationForm):
 class LoginClientForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=200)
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
+
+"""
+
+
+class UserCreationFormWithEmail(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("The email is already registered")
+        return email
