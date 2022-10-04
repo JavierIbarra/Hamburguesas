@@ -42,11 +42,12 @@ BASE_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "app.apps.AppConfig",
+    
 ]
 
 LOCAL_APPS = [
-    
+    "app.apps.AppConfig",
+    "usermanager.apps.UsermanagerConfig",
 ]
 
 THIRD_APPS = [
@@ -70,7 +71,7 @@ ROOT_URLCONF = 'burgers.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates','app/templates'],
+        'DIRS': ['templates','app/templates','usermanager/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +143,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
-    os.path.join(BASE_DIR,'app\static')
+    os.path.join(BASE_DIR,'app\static'),
+    os.path.join(BASE_DIR,'usermanager\static')
 ]
 
 # Default primary key field type
