@@ -1,9 +1,4 @@
 from email.policy import default
-from http import client
-from pyexpat import model
-from random import choices
-from tkinter import CASCADE
-from wsgiref.validate import validator
 from django.db import models
 from django.core.validators import MaxValueValidator,MinValueValidator
 from usermanager.models import Client
@@ -13,10 +8,11 @@ class Reservation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    creation = models.DateTimeField()
+    state = models.BooleanField(default=True)
+    creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self)
+        return str(self.client) +" "+ str(self.start_date)
  
 
 class Event(models.Model):
@@ -25,7 +21,7 @@ class Event(models.Model):
     attendees = models.IntegerField(validators=[MaxValueValidator(1000), MinValueValidator(0)])
 
     def __str__(self):
-        return str(self)
+        return str(self.reservation)
 
 
 class Ingredients(models.Model):

@@ -27,18 +27,18 @@ class Administrator(models.Model):
 
     def __str__(self):
         return str(self.user)
-"""
 
 class Client(AbstractBaseUser):
     first_name = models.CharField(max_length=200, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=200,)
     image = models.URLField(null=False, blank=False)
+    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     user_active = models.BooleanField(default=True)
     user_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = ['email', 'first_name', 'last_name']
+    REQUIRED_FIELD = ['email', 'first_name', 'last_name', 'phone']
 
     def __str__(self):
         return f'{self.first_name}.{self.last_name}'
@@ -52,3 +52,13 @@ class Client(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.user_admin
+
+"""
+
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
+    image = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user)
