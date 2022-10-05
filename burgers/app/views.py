@@ -10,6 +10,9 @@ from .forms import EventForm
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+class ProfilePageView(TemplateView):
+    template_name = "profile.html"
+
 class ListReservationView(ListView):
     model = Event
     template_name = 'event/calendar.html'
