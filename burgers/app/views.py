@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import *
 from django.views.generic.list import ListView
@@ -26,22 +26,27 @@ class ListEventView(ListView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('app:calendar')
+    success_url = reverse_lazy('calendar')
 
 class CreateEventView(CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('app:calendar')
+    success_url = reverse_lazy('calendar')
+
+    def form_valid(self, form):
+        if not self.request.user.is_anonymous:
+            form.instance.client = Client.objects.filter(user=self.request.user)[0]
+        return super().form_valid(form)
 
 class UpdateEventView(UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('app:calendar')
+    success_url = reverse_lazy('calendar')
 
 class DeleteEventView(DeleteView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('app:calendar')
+    success_url = reverse_lazy('calendar')
