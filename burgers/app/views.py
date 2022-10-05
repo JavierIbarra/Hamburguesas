@@ -4,13 +4,14 @@ from django.urls import reverse_lazy
 from .models import *
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from usermanager.mixins import LoginYSuperStaffMixin, ValidarPermisosMixin, LoginMixin, LoginClientMixin
 from .forms import EventForm
 
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "home.html"
 
-class ListReservationView(ListView):
+class ListReservationView(LoginClientMixin, ListView):
     model = Event
     template_name = 'event/calendar.html'
 
@@ -22,13 +23,13 @@ class ListReservationView(ListView):
             queryset = self.model.objects.none()
         return queryset
 
-class ListEventView(ListView):
+class ListEventView(LoginClientMixin, ListView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
     success_url = reverse_lazy('calendar')
 
-class CreateEventView(CreateView):
+class CreateEventView(LoginClientMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
@@ -39,13 +40,13 @@ class CreateEventView(CreateView):
             form.instance.client = Client.objects.filter(user=self.request.user)[0]
         return super().form_valid(form)
 
-class UpdateEventView(UpdateView):
+class UpdateEventView(LoginClientMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
     success_url = reverse_lazy('calendar')
 
-class DeleteEventView(DeleteView):
+class DeleteEventView(LoginClientMixin, DeleteView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'

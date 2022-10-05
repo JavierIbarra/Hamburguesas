@@ -57,7 +57,7 @@ class Client(AbstractBaseUser):
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
+    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)], blank=True, null=True)
     image = models.URLField(null=True, blank=True)
 
     def __str__(self):
