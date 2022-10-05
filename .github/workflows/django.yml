@@ -2,10 +2,10 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main", "Milestone_1", "Milestone_2", "Milestone_3", "Milestone_4" ]
+    branches: [ "main", "milestone_1", "milestone_2", "milestone_3", "milestone_4" ]
     paths-ignore: [ '**/README.md', '**/env.example' ]
   pull_request:
-    branches: [ "main", "Milestone_1", "Milestone_2", "Milestone_3", "Milestone_4" ]
+    branches: [ "main", "milestone_1", "milestone_2", "milestone_3", "milestone_4" ]
     paths-ignore: [ '**/README.md', '**/env.example' ]
 
 jobs:
