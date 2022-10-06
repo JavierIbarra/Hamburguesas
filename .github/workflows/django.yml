@@ -47,7 +47,6 @@ jobs:
         ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         WEB_HOST: ${{ secrets.WEB_HOST }}
-        WEB_PORT: ${{ secrets.WEB_PORT }}
         DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASS: ${{ secrets.POSTGRES_PASS }}
