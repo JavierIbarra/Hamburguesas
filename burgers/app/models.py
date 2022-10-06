@@ -6,7 +6,7 @@ from usermanager.models import Client
  
 
 class Event(models.Model):
-    name = models.CharField(max_length = 200, blank=True, null=True)
+    title = models.CharField(max_length = 200, blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()

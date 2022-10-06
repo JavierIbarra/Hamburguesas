@@ -1,7 +1,6 @@
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
-from .models import Client
 
 
 class LoginYSuperStaffMixin(object):
@@ -10,22 +9,13 @@ class LoginYSuperStaffMixin(object):
         if request.user.is_authenticated:
             if request.user.is_staff:
                 return super().dispatch(request, *args, **kwargs)
-        return redirect('index')
+        return redirect('home')
 
 class LoginMixin(object):
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
-        return redirect('index')
-
-class LoginClientMixin(object):
-    
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            clt = Client.objects.filter(user=self.request.user)
-            if len(clt) > 0:
-                return super().dispatch(request, *args, **kwargs)
         return redirect('home')
 
 class ValidarPermisosMixin(object):
