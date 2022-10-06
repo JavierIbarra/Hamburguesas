@@ -8,4 +8,6 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 COPY . .
 
+RUN chmod +x ./docker/docker-entrypoint.sh
+
 ENTRYPOINT [ "./docker/docker-entrypoint.sh" ]

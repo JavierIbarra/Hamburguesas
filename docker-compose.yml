@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  db:
+  postgres:
     image: postgres:latest
     environment: 
       - POSTGRES_USER=postgres
@@ -8,8 +8,8 @@ services:
     ports:
       - 5432:5432
 
-  web_django:
-    container_name: web_django
+  web-django:
+    container_name: web-django
     ports:
       - 8001:8001
     env_file:
@@ -20,10 +20,10 @@ services:
       context: burgers
       dockerfile: ./docker/Dockerfile
     depends_on:
-      - db
+      - postgres
 
-  web_django_2:
-    container_name: web_django_2
+  web-django-2:
+    container_name: web-django-2
     ports:
       - 8002:8002
     env_file:
@@ -34,7 +34,7 @@ services:
       context: burgers
       dockerfile: ./docker/Dockerfile
     depends_on:
-      - db
+      - postgres
 
   nginx:
     container_name: nginx
@@ -44,8 +44,8 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - web_django
-      - web_django_2
+      - web-django
+      - web-django-2
     links:
-      - web_django:web_django
-      - web_django_2:web_django_2
+      - web-django:web-django
+      - web-django-2:web-django-2

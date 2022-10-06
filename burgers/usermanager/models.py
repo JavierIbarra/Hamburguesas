@@ -1,64 +1,59 @@
-from email.policy import default
-from statistics import mode
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin,)
 from django.core.validators import MaxValueValidator,MinValueValidator
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-"""
-class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    first_name = models.CharField(max_length=200, null=True, blank=True)
-    last_name = models.CharField(max_length=200, null=True, blank=True)
-    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    email = models.EmailField(max_length=200,)
 
-    def __str__(self):
-        return str(self.user)
+class UserManager(BaseUserManager):
 
-class Administrator(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    admin_name = models.CharField(max_length=30, null=False)
-    first_name = models.CharField(max_length=200, null=True, blank=True)
-    last_name = models.CharField(max_length=200, null=True, blank=True)
-    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    email = models.EmailField(max_length=200,)
+    def _create_user(self, email, password=None, **extra_fields):
+        if not email:  
+            raise AttributeError("User must set an email address")
+        else:  
+            email = self.normalize_email(email)
 
-    def __str__(self):
-        return str(self.user)
+        # create user
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password) 
+        user.save(using=self._db)  
+        return user
 
-class Client(AbstractBaseUser):
-    first_name = models.CharField(max_length=200, null=True, blank=True)
-    last_name = models.CharField(max_length=200, null=True, blank=True)
-    email = models.EmailField(max_length=200,)
-    image = models.URLField(null=False, blank=False)
-    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    user_active = models.BooleanField(default=True)
-    user_admin = models.BooleanField(default=False)
+    def create_user(self, email, first_name, last_name , phone, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", False)
+        extra_fields.setdefault("is_superuser", False)
+        return self._create_user(email, password, first_name, last_name , phone,**extra_fields)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = ['email', 'first_name', 'last_name', 'phone']
+    def create_staffuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", False)
+        return self._create_user(email, password, **extra_fields)
 
-    def __str__(self):
-        return f'{self.first_name}.{self.last_name}'
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self._create_user(email, password, **extra_fields)
 
-    def has_perm(self, perm, obj = None):
-        return True
 
-    def has_module_perm(self, app_label):
-        return True
+class Client(AbstractBaseUser, PermissionsMixin):
+    """ Custom user model """
 
-    @property
-    def is_staff(self):
-        return self.user_admin
+    email = models.EmailField(
+        _("Email Address"),
+        max_length=255,
+        unique=True,
+    )
+    first_name = models.CharField(_("First Name"), max_length=30, null=True, blank=True)
+    last_name = models.CharField(_("Last Name"), max_length=30, null=True, blank=True)
+    phone = models.IntegerField(_("Phone"),validators=[MaxValueValidator(999999999), MinValueValidator(100000000)], null=True, blank=True)
+    image = models.URLField(_("Image"), null=True, blank=True)
+    is_staff = models.BooleanField(_("Staff status"), default=False)
+    is_active = models.BooleanField(_("Active"), default=True)
+    date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
+    last_updated = models.DateTimeField(_("Last Updated"), auto_now=True)
 
-"""
+    objects = UserManager()
 
-class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    phone = models.IntegerField(validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    image = models.URLField(null=True, blank=True)
+    USERNAME_FIELD = "email"
 
     def __str__(self):
-        return str(self.user)
+        return self.email

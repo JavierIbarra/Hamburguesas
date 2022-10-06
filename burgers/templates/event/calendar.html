@@ -10,7 +10,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md-12">
-                <h2><strong class="card-title">Reservation Calendar</strong></h2> 
+                <h2><strong class="card-title">Events Calendar</strong></h2> 
             </div>
         </div>
 
@@ -34,11 +34,11 @@
                 center: 'title',
             },
             events: [
-                {% for reservation in object_list %}
+                {% for event in object_list %}
                     {
-                        title: '{{ reservation.client }} {{ reservation.start_date | time:"H:i" }} -> {{ reservation.end_date | time:"H:i" }}',
-                        start: '{{ reservation.start_date | date:"Y-m-d" }}',
-                        end: '{{ reservation.end_date | date:"Y-m-d" }}',
+                        title: '{{ event.title }} {{ event.start_date | time:"H:i" }} -> {{ event.end_date | time:"H:i" }}',
+                        start: '{{ event.start_date | date:"Y-m-d" }}',
+                        end: '{{ event.end_date | date:"Y-m-d" }}',
                     },
                 {% endfor %}
             ]
