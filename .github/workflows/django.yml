@@ -3,10 +3,10 @@ name: Django CI
 on:
   push:
     branches: [ "main", "milestone_1", "milestone_2", "milestone_3", "milestone_4" ]
-    paths-ignore: [ "**/README.md", "**/env.example", "dockerhub.yml" ]
+    paths-ignore: [ "**/README.md", "**/env.example", "**/dockerhub.yml" ]
   pull_request:
     branches: [ "main", "milestone_1", "milestone_2", "milestone_3", "milestone_4" ]
-    paths-ignore: [ "**/README.md", "**/env.example", "dockerhub.yml" ]
+    paths-ignore: [ "**/README.md", "**/env.example", "**/dockerhub.yml" ]
 
 jobs:
   build:

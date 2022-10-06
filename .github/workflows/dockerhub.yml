@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches: ['main']
-    paths-ignore: [ '**/README.md', '**/env.example', 'django.yml' ]
+    paths-ignore: [ '**/README.md', '**/env.example', '**/django.yml' ]
 
 jobs:
   docker:
