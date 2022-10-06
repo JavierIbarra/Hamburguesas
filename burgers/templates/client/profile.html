@@ -1,0 +1,58 @@
+{% extends "header_template.html" %}
+{% block content %}
+
+<h1>PROFILE</h1>
+<div class="containter d-flex justify-content-center my-3 mx-4">
+    <div class="col">
+        <div class="row d-flex justify-content-center my-2">
+            <div class="row border border-danger rounded  my-2" id="user-profile-container">
+                <div class="row">
+                    {{user.id}}
+                    <div class="col">
+                        User name
+                    </div>
+                    <div class="col">
+                        Email
+                    </div>
+                </div>
+                <div class="row my-2">
+                    <div class="col">
+                        {{user.username}}
+                    </div>
+                    <div class="col">
+                        {{user.email}}
+                    </div>
+                <div>
+                    Upcoming events
+                <div class="row my-3">
+                    <div class="col">
+                        Event Name
+                    </div>
+                    <div class="col">
+                        Start Date
+                    </div>
+                    <div class="col">
+                        End Date
+                    </div>
+                </div>
+                {%for i in event%}
+                {%if i.client == user.id%}
+                <div class="row my-3">
+                    <div class="col">
+                        {{i.id}}
+                    </div>
+                    <div class="col">
+                        {{i.start_date}}
+                    </div>
+                    <div class="col">
+                        {{i.end_date}}
+                    </div>
+                </div>
+                {%endif%}
+                {%endfor%}
+            <div>
+        <div>
+    </div>
+</div>
+
+{% endblock %}
