@@ -35,11 +35,10 @@
                         End Date
                     </div>
                 </div>
-                {%for i in event%}
-                {%if i.client == user.id%}
+                {%for i in events%}  
                 <div class="row my-3">
                     <div class="col">
-                        {{i.id}}
+                        {{i.name}}
                     </div>
                     <div class="col">
                         {{i.start_date}}
@@ -48,11 +47,11 @@
                         {{i.end_date}}
                     </div>
                 </div>
-                {%endif%}
-                {%endfor%}
-            <div>
-        <div>
+                    {%endfor%}
+                    <div>
+                <div>
+            </div>
+        </div>
     </div>
 </div>
-
 {% endblock %}

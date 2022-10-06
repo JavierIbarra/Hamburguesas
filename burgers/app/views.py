@@ -11,8 +11,10 @@ from .forms import EventForm
 class HomePageView(TemplateView):
     template_name = "home.html"
 
-class ProfilePageView(LoginClientMixin,TemplateView):
+class ProfilePageView(LoginClientMixin,ListView):
     template_name = "client/profile.html"
+    model = Event.objects.filter(client.id ==user.id)   
+    context_object_name = 'events'
 
 class ListReservationView(LoginClientMixin,ListView):
     model = Event

@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from email.policy import default
 from django.db import models
 from django.core.validators import MaxValueValidator,MinValueValidator
@@ -5,6 +6,7 @@ from usermanager.models import Client
  
 
 class Event(models.Model):
+    name = models.CharField(max_length = 200, blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -14,7 +16,7 @@ class Event(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.reservation)
+        return str(self.name)
 
 
 class Ingredients(models.Model):
