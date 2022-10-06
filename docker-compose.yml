@@ -47,5 +47,5 @@ services:
       - web-django
       - web-django-2
     links:
-      - web_django:web_django
+      - web-django:web-django
       - web-django-2:web-django-2
