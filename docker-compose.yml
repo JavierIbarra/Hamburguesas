@@ -18,7 +18,7 @@ services:
       - WEB_PORT=8001
     build: 
       context: burgers
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./Dockerfile
     depends_on:
       - postgres
 
@@ -32,7 +32,7 @@ services:
       - WEB_PORT=8002
     build: 
       context: burgers
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./Dockerfile
     depends_on:
       - postgres
 
