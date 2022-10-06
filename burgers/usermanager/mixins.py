@@ -3,20 +3,21 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from .models import Client
 
+
 class LoginYSuperStaffMixin(object):
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             if request.user.is_staff:
                 return super().dispatch(request, *args, **kwargs)
-        return redirect('index')
+        return redirect('home')
 
 class LoginMixin(object):
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
-        return redirect('index')
+        return redirect('home')
 
 class ValidarPermisosMixin(object):
     permission_required = ''
