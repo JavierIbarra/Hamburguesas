@@ -30,10 +30,10 @@ class EventsCalendarView(LoginMixin,ListView):
         return queryset
 
 class ListEventView(LoginMixin, ListView):
+    template_name = 'event/events.html'
     model = Event
-    form_class = EventForm
-    template_name = 'event/create_event.html'
-    success_url = reverse_lazy('calendar')
+    context_object_name = 'event_list'
+    
 
 class CreateEventView(LoginMixin, CreateView):
     model = Event
@@ -48,11 +48,10 @@ class CreateEventView(LoginMixin, CreateView):
 class UpdateEventView(LoginMixin, UpdateView):
     model = Event
     form_class = EventForm
-    template_name = 'event/create_event.html'
+    template_name = 'event/update_event.html'
     success_url = reverse_lazy('calendar')
 
 class DeleteEventView(LoginMixin, DeleteView):
     model = Event
-    form_class = EventForm
-    template_name = 'event/create_event.html'
+    template_name = 'event/event_confirm_delete.html'
     success_url = reverse_lazy('calendar')
