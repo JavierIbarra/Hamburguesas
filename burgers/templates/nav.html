@@ -14,11 +14,15 @@
                             href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'list_event' %}">Event</a>
+                    <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'create_event' %}">Create Event</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'calendar' %}">Calendar</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'list_event' %}">My Events</a>
+                </li>
+                
             </ul>
             <form class="d-flex">
                 {% if not request.user.is_authenticated %}

@@ -14,7 +14,7 @@ class Event(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.reservation)
+        return str(self.id)
 
 
 class Ingredients(models.Model):
