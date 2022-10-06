@@ -2,8 +2,8 @@ name: ci
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: ['main']
+    paths-ignore: [ '**/README.md', '**/env.example', 'django.yml' ]
 
 jobs:
   docker:
@@ -25,6 +25,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: "{{defaultContext}}:burgers/docker"
+          context: "{{defaultContext}}:burgers"
+          dockerfile: ./docker/Dockerfile
           push: true
           tags: user/app:latest
