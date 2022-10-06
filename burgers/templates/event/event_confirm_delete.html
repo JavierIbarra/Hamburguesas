@@ -7,10 +7,10 @@
         <h1 class="mb-5">Delete Event</h1>
 
         <p class="h5">Are you sure you want to delete the Event:</p>
-        <h3 class="my-5">{{ event.id }}</h3>
+        <h3 class="my-5">{{ event.title }}</h3>
         <form action="" method="POST">
             {% csrf_token %}
-            <input type="submit" class="btn btn-danger btn-lg" value="Cancel" onclick="window.location='{% url 'list_event' %}'; return false;">
+            <a class="btn btn-danger btn-lg" href="{% url 'list_event' %}">Cancel</a>
             <input type="submit" class="btn btn-primary btn-lg" value="Confirm">
             
         </form>

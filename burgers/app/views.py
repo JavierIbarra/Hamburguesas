@@ -39,7 +39,7 @@ class CreateEventView(LoginMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('calendar')
+    success_url = reverse_lazy('list_event')
 
     def form_valid(self, form):
         form.instance.client = self.request.user
@@ -49,9 +49,9 @@ class UpdateEventView(LoginMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'event/update_event.html'
-    success_url = reverse_lazy('calendar')
+    success_url = reverse_lazy('list_event')
 
 class DeleteEventView(LoginMixin, DeleteView):
     model = Event
     template_name = 'event/event_confirm_delete.html'
-    success_url = reverse_lazy('calendar')
+    success_url = reverse_lazy('list_event')

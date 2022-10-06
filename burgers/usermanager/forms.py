@@ -22,11 +22,16 @@ class SignUpForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
         validators=[validate_password],
     )
-
+    
     class Meta:
         model = Client
-        fields = ["email"]
-        widgets = {"email": forms.EmailInput(attrs={"class": "form-control"})}
+        fields = ["email", "first_name", "last_name", "phone"]
+        widgets = {"email": forms.EmailInput(attrs={"class": "form-control"}), 
+        "first_name": forms.TextInput(attrs={"class": "form-control"}),
+        "last_name": forms.TextInput(attrs={"class": "form-control"}),
+        "phone": forms.TextInput(attrs={"class": "form-control"}),
+        }
+
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

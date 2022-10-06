@@ -7,7 +7,6 @@
         <div class="row d-flex justify-content-center my-2">
             <div class="row border border-danger rounded  my-2" id="user-profile-container">
                 <div class="row">
-                    {{user.id}}
                     <div class="col">
                         User name
                     </div>
@@ -17,39 +16,32 @@
                 </div>
                 <div class="row my-2">
                     <div class="col">
-                        {{user.username}}
+                        {{user.first_name}} {{user.last_name}}
                     </div>
                     <div class="col">
                         {{user.email}}
                     </div>
                 <div>
-                    Upcoming events
-                <div class="row my-3">
-                    <div class="col">
-                        Event Title
-                    </div>
-                    <div class="col">
-                        Start Date
-                    </div>
-                    <div class="col">
-                        End Date
-                    </div>
+                    <h4>Upcoming events</h4>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Event Title</th>                   
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in events%}  
+                                <tr>
+                                    <td>{{i.title}}</td>                   
+                                    <td>{{i.start_date}}</td>
+                                    <td>{{i.end_date}}</td>
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
                 </div>
-                {%for i in events%}  
-                <div class="row my-3">
-                    <div class="col">
-                        {{i.title}}
-                    </div>
-                    <div class="col">
-                        {{i.start_date}}
-                    </div>
-                    <div class="col">
-                        {{i.end_date}}
-                    </div>
-                </div>
-                    {%endfor%}
-                    <div>
-                <div>
             </div>
         </div>
     </div>

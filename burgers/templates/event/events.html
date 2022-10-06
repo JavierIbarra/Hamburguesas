@@ -4,10 +4,20 @@
 <div class="container">
     <div class="row mt-3 post border form">
       <div class="col-md-9 mx-auto m-5" id="events-list-container">
-          <h3 class="mb-4">My Events</h3>
+        <div class="row">
+          <div class="col-md-9 mx-auto m-5">
+            <h3 class="mb-4">My Events</h3>
+          </div>
+          <div class="col-md-3 mx-auto m-5">
+            <a class="btn btn-success btn-block" href="{% url 'create_event' %}">Create Event</a>
+          </div>
+          
+        </div>
+
           <table class="table table-striped table-bordered table-lg">
             <thead class="thead-dark">
               <tr>
+                <th>Title</th>
                 <th>Start</th>
                 <th>End</th>
                 <th>Address</th>
@@ -18,6 +28,7 @@
             {% for event in event_list %}
             {%if event.client.id == user.id%}
             <tr>
+              <td>{{event.title}}</td>
               <td>{{event.start_date}}</td>
               <td>{{event.end_date}}</td>
               <td>{{event.address}}</td>
@@ -33,8 +44,8 @@
             {%endfor%}
           </tbody>
         </table>
-          
-    
+        
+        
       </div>
     </div>
   </div>
