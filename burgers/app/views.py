@@ -42,7 +42,7 @@ class CreateEventView(CreateView):
 class UpdateEventView(UpdateView):
     model = Event
     form_class = EventForm
-    template_name = 'event/create_event.html'
+    template_name = 'event/update_event.html'
     success_url = reverse_lazy('calendar')
 
 class DeleteEventView(DeleteView):
