@@ -1,0 +1,3 @@
+Se muestran todas las vistas actualmente disponibles en la applicacion, intentamos hacer la entrega de un MVP, pero faltaron algunos features basicos del funcionamiento de la applicacion.
+En la vista de creacion de un evento, falta integrar el modelo de ingredientes, donde el cliente puede escoger cuales incluira en su reserva.
+Y la vista de calendario era inicialmente una prueba de concepto, actualmente se pueden vizualizar las reservas existentes, pero hay que expandir el alcance, permitiendo seleccionar la fecha de inicio y termino desde el mismo calendario, y mostrar las fechas ya ocupadas sin mayor detalle (a que usuario pertenece la reserva) a los demas usuarios.
