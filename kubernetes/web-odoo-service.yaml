@@ -6,14 +6,14 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: web-django-2
-  name: web-django-2
+    io.kompose.service: web-odoo
+  name: web-odoo
 spec:
   ports:
-    - name: "8002"
-      port: 8002
-      targetPort: 8002
+    - name: "8069"
+      port: 8069
+      targetPort: 8069
   selector:
-    io.kompose.service: web-django-2
+    io.kompose.service: web-odoo
 status:
   loadBalancer: {}

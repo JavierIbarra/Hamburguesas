@@ -67,7 +67,7 @@ spec:
                   name: burgers-docker--env
             - name: WEB_PORT
               value: "8001"
-          image: hamburguesas-web-django:latest
+          image: javieribarra/burger-django:latest
           name: web-django
           ports:
             - containerPort: 8001

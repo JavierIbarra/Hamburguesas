@@ -2,10 +2,10 @@ apiVersion: v1
 data:
   ALLOWED_HOSTS: '*'
   DATABASE_NAME: postgres
-  DATABASE_URL: postgres://USER_DB:PASSWORD_DB@DB_HOST:DB_PORT/DB_NAME
+  DATABASE_URL: postgres://burger:myburger@db:5432/postgres
   DEBUG: "True"
-  POSTGRES_PASSWORD: postgres
-  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: myburger
+  POSTGRES_USER: burger
   SECRET_KEY: '...'
   WEB_HOST: 0.0.0.0
 kind: ConfigMap
