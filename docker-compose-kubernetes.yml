@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  web-django:
+    container_name: web-django
+    image: javieribarra/burger-django:latest
+    ports:
+      - 8001:8001
+    depends_on:
+      - postgres
+
+  web-odoo:
+    container_name: web-odoo
+    image: javieribarra/burger-odoo:latest
+    ports:
+      - 8069:8069
+    depends_on:
+      - postgres
+
+  nginx:
+    container_name: nginx
+    image: javieribarra/burger-nginx:latest
+    ports:
+      - 8000:8000
+    depends_on:
+      - web-django
+      - web-odoo
+    links:
+      - web-django:web-django
+      - web-odoo:web-odoo

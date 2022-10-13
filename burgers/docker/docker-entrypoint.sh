@@ -8,8 +8,8 @@
 #python manage.py flush --no-input
 
 # Apply database migrations
-#echo "Apply database migrations"
-#python manage.py migrate
+echo "Apply database migrations"
+python manage.py migrate
 
 # Start server
 echo "Starting server"

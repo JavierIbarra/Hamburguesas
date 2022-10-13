@@ -4,7 +4,7 @@ data:
   DATABASE_NAME: postgres
   DATABASE_URL: postgres://USER_DB:PASSWORD_DB@DB_HOST:DB_PORT/DB_NAME
   DEBUG: "True"
-  POSTGRES_PASS: postgres
+  POSTGRES_PASSWORD: postgres
   POSTGRES_USER: postgres
   SECRET_KEY: '...'
   WEB_HOST: 0.0.0.0

@@ -1,10 +1,11 @@
 version: '3.8'
 services:
-  postgres:
+  db:
     image: postgres:latest
     environment: 
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=burger
+      - POSTGRES_PASSWORD=myburger
     ports:
       - 5432:5432
 
@@ -20,21 +21,20 @@ services:
       context: burgers
       dockerfile: ./Dockerfile
     depends_on:
-      - postgres
+      - db
 
-  web-django-2:
-    container_name: web-django-2
+  web-odoo:
+    image: odoo:14.0
     ports:
-      - 8002:8002
-    env_file:
-      - ./burgers/docker/.env
+      - 8069:8069
     environment:
-      - WEB_PORT=8002
-    build: 
-      context: burgers
-      dockerfile: ./Dockerfile
+      - HOST=db
+      - USER=burger
+      - PASSWORD=myburger
     depends_on:
-      - postgres
+      - db
+    links:
+      - db:db
 
   nginx:
     container_name: nginx
@@ -45,7 +45,7 @@ services:
       - 8000:8000
     depends_on:
       - web-django
-      - web-django-2
+      - web-odoo
     links:
       - web-django:web-django
-      - web-django-2:web-django-2
+      - web-odoo:web-odoo

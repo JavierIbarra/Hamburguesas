@@ -45,10 +45,10 @@ spec:
                 configMapKeyRef:
                   key: DEBUG
                   name: burgers-docker--env
-            - name: POSTGRES_PASS
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: POSTGRES_PASS
+                  key: POSTGRES_PASSWORD
                   name: burgers-docker--env
             - name: POSTGRES_USER
               valueFrom:

@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: ['main']
+    branches: ["main", "milestone_1", "milestone_2", "milestone_3", "milestone_4"]
     paths-ignore: [ '**/README.md', '**/env.example', '**/django.yml' ]
 
 jobs:
@@ -22,9 +22,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push docker django
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:burgers"
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-django:latest
+      -
+        name: Build and push docker nginx
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:nginx"
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-nginx:latest
+      -
+        name: Build and push docker odoo
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:odoo"
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-odoo:latest
