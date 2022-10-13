@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches: ["main", "milestone_1", "milestone_2", "milestone_3", "milestone_4"]
-    paths-ignore: [ '**/README.md', '**/env.example', '**/django.yml' ]
+    paths-ignore: [ '**/README.md', '**/env.example', '**/django.yml', '**/docker-compose.yml', '**/docker-compose-old.yml', '/kubernetes' ]
 
 jobs:
   docker:

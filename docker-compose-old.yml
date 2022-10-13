@@ -11,19 +11,20 @@ services:
 
   web-django:
     container_name: web-django
-    image: javieribarra/burger-django:latest
     ports:
       - 8001:8001
     env_file:
       - ./burgers/docker/.env
     environment:
       - WEB_PORT=8001
+    build: 
+      context: burgers
+      dockerfile: ./Dockerfile
     depends_on:
       - db
 
   web-odoo:
-    container_name: web-odoo
-    image: javieribarra/burger-odoo:latest
+    image: odoo:14.0
     ports:
       - 8069:8069
     environment:
@@ -32,10 +33,14 @@ services:
       - PASSWORD=myburger
     depends_on:
       - db
+    links:
+      - db:db
 
   nginx:
     container_name: nginx
-    image: javieribarra/burger-nginx:latest
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile
     ports:
       - 8000:8000
     depends_on:
