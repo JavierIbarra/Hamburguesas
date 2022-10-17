@@ -2,12 +2,17 @@ version: '3.8'
 services:
   db:
     image: postgres:latest
+    container_name: db
+    restart: unless-stopped
     environment: 
       - POSTGRES_DB=postgres
       - POSTGRES_USER=burger
       - POSTGRES_PASSWORD=myburger
+      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
   web-django:
     container_name: web-django
@@ -24,6 +29,7 @@ services:
   web-odoo:
     container_name: web-odoo
     image: javieribarra/burger-odoo:latest
+    restart: unless-stopped
     ports:
       - 8069:8069
     environment:
@@ -32,6 +38,12 @@ services:
       - PASSWORD=myburger
     depends_on:
       - db
+    links:
+      - db:db
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
 
   nginx:
     container_name: nginx
@@ -44,3 +56,7 @@ services:
     links:
       - web-django:web-django
       - web-odoo:web-odoo
+
+volumes:
+  odoo-data:
+  db-data:
