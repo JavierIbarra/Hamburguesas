@@ -1,3 +1,7 @@
+x-odoo-build: &odoo-build
+  context: ./odoo/
+  dockerfile: ./docker/Dockerfile
+
 version: '3.8'
 services:
   db:
@@ -24,13 +28,20 @@ services:
 
   web-odoo:
     container_name: web-odoo
+    restart: unless-stopped
     build: 
-      context: odoo
+      context: ./odoo/
       dockerfile: ./Dockerfile
     ports:
       - 8069:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./odoo/addons:/mnt/extra-addons
+      - ./odoo/addons-customize:/mnt/extra-addons-customize
+      - ./odoo/config:/etc/odoo
     env_file:
       - ./odoo/docker/.env
+    entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
     depends_on:
       - db
     links:
@@ -51,5 +62,5 @@ services:
       - web-odoo:web-odoo
 
 volumes:
-  odoo-data:
+  odoo-web-data:
   db-data:

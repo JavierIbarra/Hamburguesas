@@ -42,8 +42,7 @@ services:
       - db:db
     volumes:
       - odoo-data:/var/lib/odoo
-      - ./config:/etc/odoo
-      - ./addons:/mnt/extra-addons
+      - ./odoo/extra_addons:/mnt/extra_addons
 
   nginx:
     container_name: nginx
