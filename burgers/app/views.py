@@ -5,7 +5,7 @@ from .models import *
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from usermanager.mixins import LoginYSuperStaffMixin, ValidarPermisosMixin, LoginMixin
-from .forms import EventForm
+from .forms import EventForm, IngredientForm
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -40,6 +40,7 @@ class CreateEventView(LoginMixin, CreateView):
     form_class = EventForm
     template_name = 'event/create_event.html'
     success_url = reverse_lazy('list_event')
+    #success_url = reverse_lazy('event_ingredients')
 
     def form_valid(self, form):
         form.instance.client = self.request.user
@@ -55,3 +56,19 @@ class DeleteEventView(LoginMixin, DeleteView):
     model = Event
     template_name = 'event/event_confirm_delete.html'
     success_url = reverse_lazy('list_event')
+
+
+class ListIngredientView(LoginMixin, ListView):
+    model = Ingredient
+    template_name = 'ingredients/ingredients.html'
+    context_object_name = 'ingredients_list'
+
+class CreateIngredientView(LoginMixin, CreateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = 'ingredients/create_ingredient.html'
+    success_url = reverse_lazy('ingredients')
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
