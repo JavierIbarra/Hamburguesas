@@ -10,7 +10,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ["title","address", "attendees", "start_date", "end_date"] 
+        fields = ["title","address", "CuartoDeLibra","Quinoa","attendees", "start_date", "end_date"] 
         widgets = {
             "title": forms.TextInput(
                 attrs={"class": "form-control"}
@@ -20,6 +20,19 @@ class EventForm(forms.ModelForm):
                     "class": "form-control",
                 }
             ),
+            "CuartoDeLibra": forms.NumberInput(
+                attrs={
+                    "class": "form-control", 
+                    "min": 0,
+                }
+            ),
+            "Quinoa": forms.NumberInput(
+                attrs={
+                    "class": "form-control", 
+                    "min": 0,
+                }
+            ),
+            
             "attendees": forms.NumberInput(
                 attrs={
                     "class": "form-control", 
@@ -39,12 +52,12 @@ class EventForm(forms.ModelForm):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ["name","image","measurement","unitary_cost","avg_consumption_pp"]
+        fields = ["name","image","description","measurement","unitary_cost","avg_consumption_pp"]
         widgets = {
             "name": forms.TextInput(
                 attrs={"class": "form-control"}
             ),
-            "image": forms.FileInput(
+            "description": forms.TextInput(
                 attrs={"class": "form-control"}
             ),
             "measurement": forms.Select(

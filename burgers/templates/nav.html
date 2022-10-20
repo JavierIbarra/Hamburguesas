@@ -23,11 +23,8 @@
                     <li class="nav-item">
                         <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'profile' %}">Profile</a>
                     </li>
-                    {%if request.user.is_staff%}
-                    <li class="nav-item">
-                        <a class="nav-link text-uppercase font-weight-bolder" href="{% url 'ingredients' %}">Ingredients</a>
-                    </li>
-                    {%endif%}
+                    
+                    
                 {% endif %}
             </ul>
             <form class="d-flex">

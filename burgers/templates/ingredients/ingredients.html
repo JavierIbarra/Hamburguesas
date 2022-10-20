@@ -1,0 +1,26 @@
+{% extends 'header_template.html' %}
+{% load static %}
+{% block content %}
+<div class = "wrapper">
+    <div class = "view main">
+        <h3>Our Burguers</h3>
+        <div class = "view wrap grid-view">
+            {% for burguer in ingredients_list%}
+            <div class=" view_item">
+                <div class="vi_left">
+                  
+                </div>
+                <div class="vi_right">
+                    <p class="name">
+                        {{burguer.name}}
+                    </p>
+                    <p class="description">
+                        {{burguer.description}}
+                    </p>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+{% endblock %}
