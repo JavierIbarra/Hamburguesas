@@ -50,5 +50,9 @@ jobs:
         DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASS }}
+        DB_ODOO: ${{ secrets.DB_ODOO }}
+        USER_ODOO: ${{ secrets.USER_ODOO }}
+        TOKEN_ODOO: ${{ secrets.TOKEN_ODOO }}
+        URL_ODOO: ${{ secrets.URL_ODOO }}
       run: |
         python burgers/manage.py test
