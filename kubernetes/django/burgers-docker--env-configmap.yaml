@@ -3,11 +3,16 @@ data:
   ALLOWED_HOSTS: '*'
   DATABASE_NAME: postgres
   DATABASE_URL: postgres://burger:myburger@db:5432/postgres
+  DB_ODOO: odoo14
   DEBUG: "True"
   POSTGRES_PASSWORD: myburger
   POSTGRES_USER: burger
   SECRET_KEY: '...'
+  TOKEN_ODOO: 3a23b3b6b2cb8ce3d95dd997f851b283f9a91944
+  URL_ODOO: http://web-odoo
+  USER_ODOO: jaibarra1@miuandes.cl
   WEB_HOST: 0.0.0.0
+  WEB_PORT: "8001"
 kind: ConfigMap
 metadata:
   creationTimestamp: null

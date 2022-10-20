@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  PGDATA: /var/lib/postgresql/data/pgdata
+  POSTGRES_DB: postgres
+  POSTGRES_PASSWORD: myburger
+  POSTGRES_USER: burger
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: db-db-postgres-docker--env
+  name: db-postgres-docker--env

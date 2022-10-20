@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.cmd: kompose convert -f ../docker-compose.yml
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.cmd: kompose convert -f ../docker-compose.yml
         kompose.version: 1.26.1 (a9d05d509)
       creationTimestamp: null
       labels:
@@ -40,6 +40,11 @@ spec:
                 configMapKeyRef:
                   key: DATABASE_URL
                   name: burgers-docker--env
+            - name: DB_ODOO
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_ODOO
+                  name: burgers-docker--env
             - name: DEBUG
               valueFrom:
                 configMapKeyRef:
@@ -60,13 +65,31 @@ spec:
                 configMapKeyRef:
                   key: SECRET_KEY
                   name: burgers-docker--env
+            - name: TOKEN_ODOO
+              valueFrom:
+                configMapKeyRef:
+                  key: TOKEN_ODOO
+                  name: burgers-docker--env
+            - name: URL_ODOO
+              valueFrom:
+                configMapKeyRef:
+                  key: URL_ODOO
+                  name: burgers-docker--env
+            - name: USER_ODOO
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_ODOO
+                  name: burgers-docker--env
             - name: WEB_HOST
               valueFrom:
                 configMapKeyRef:
                   key: WEB_HOST
                   name: burgers-docker--env
             - name: WEB_PORT
-              value: "8001"
+              valueFrom:
+                configMapKeyRef:
+                  key: WEB_PORT
+                  name: burgers-docker--env
           image: javieribarra/burger-django:latest
           name: web-django
           ports:

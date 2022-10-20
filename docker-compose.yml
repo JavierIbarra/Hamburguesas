@@ -3,7 +3,6 @@ services:
   db:
     image: postgres:latest
     container_name: db
-    restart: unless-stopped
     env_file: 
       - ./db-postgres/docker/.env
     ports:
@@ -28,7 +27,6 @@ services:
   web-odoo:
     container_name: web-odoo
     image: javieribarra/burger-odoo:latest
-    restart: unless-stopped
     ports:
       - 8069:8069
     env_file:
