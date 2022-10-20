@@ -5,7 +5,7 @@
 #python manage.py collectstatic --noinput
 
 #echo "Flusing django manage command"
-python manage.py flush --no-input
+#python manage.py flush --no-input
 
 python manage.py makemigrations
 

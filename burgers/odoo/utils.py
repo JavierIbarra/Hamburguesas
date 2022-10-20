@@ -27,13 +27,25 @@ class Odoo():
 
         return partner_id
 
-    def CrmAdd(self, productRow):
+    def partnerCheck(self, partnerEmail):
+        odoo_filter = [[("email", "=", partnerEmail)]]
+        product_id  = self.ODOO_OBJECT.execute_kw(
+            self.DATA,
+            self.UID,
+            self.PASS,
+            'res.partner',
+            'search',
+            odoo_filter)
+
+        return product_id[0]
+
+    def CrmCreate(self, eventRow):
         crm_id = self.ODOO_OBJECT.execute_kw(
             self.DATA,
             self.UID,
             self.PASS,
             'crm.lead',
-            'write',
-            productRow)
+            'create',
+            eventRow)
 
         return crm_id

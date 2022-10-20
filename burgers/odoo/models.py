@@ -16,5 +16,16 @@ def create_client_odoo(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Event)
 def create_crm_odoo(sender, instance, created, **kwargs):
     if created:
-        pass
-    pass
+        od = Odoo()
+        od.authenticateOdoo()
+        user_id = od.partnerCheck(instance.client.email)
+        eventRow =  [
+            {
+                'name': instance.title, 
+                'burger': instance.attendees, 
+                'partner_id': f'{user_id}',
+                'phone':instance.client.phone,
+                'street':instance.address,
+                'expected_revenue': f'{instance.CuartoDeLibra*5000 +instance.Quinoa*7500 + 30000}',
+            }]
+        od.CrmCreate(eventRow)
