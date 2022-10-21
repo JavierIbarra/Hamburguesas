@@ -48,6 +48,7 @@ BASE_APPS = [
 LOCAL_APPS = [
     "app.apps.AppConfig",
     "usermanager.apps.UsermanagerConfig",
+    "odoo.apps.OdooConfig",
 ]
 
 THIRD_APPS = [
@@ -90,17 +91,17 @@ WSGI_APPLICATION = 'burgers.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # production
-#DATABASES = {
-#    'default': env.db()
-#}
+DATABASES = {
+    'default': env.db()
+}
 
 
 # Password validation
@@ -141,12 +142,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/images/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
     os.path.join(BASE_DIR,'app\static'),
     os.path.join(BASE_DIR,'usermanager\static')
 ]
-
+MEDIA_ROOT = [
+    os.path.join(BASE_DIR, 'static/images')
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -158,3 +163,8 @@ AUTH_USER_MODEL = "usermanager.Client"
 # Auth redirects
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+DB_ODOO=env('DB_ODOO')
+USER_ODOO=env('USER_ODOO')
+TOKEN_ODOO=env('TOKEN_ODOO')
+URL_ODOO=env('URL_ODOO')

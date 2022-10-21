@@ -1,9 +1,12 @@
+x-odoo-build: &odoo-build
+  context: ./odoo/
+  dockerfile: ./docker/Dockerfile
+
 version: '3.8'
 services:
   db:
     image: postgres:latest
     container_name: db
-    restart: unless-stopped
     env_file: 
       - ./db-postgres/docker/.env
     ports:
@@ -13,13 +16,13 @@ services:
 
   web-django:
     container_name: web-django
-    image: javieribarra/burger-django:latest
+    build: 
+      context: burgers
+      dockerfile: ./Dockerfile
     ports:
       - 8001:8001
     env_file:
       - ./burgers/docker/.env
-    environment:
-      - WEB_PORT=8001
     depends_on:
       - db
     links:
@@ -27,23 +30,27 @@ services:
 
   web-odoo:
     container_name: web-odoo
-    image: javieribarra/burger-odoo:latest
     restart: unless-stopped
+    build: 
+      context: ./odoo/
+      dockerfile: ./Dockerfile
     ports:
       - 8069:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
     env_file:
       - ./odoo/docker/.env
+    entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
     depends_on:
       - db
     links:
       - db:db
-    volumes:
-      - odoo-data:/var/lib/odoo
-    entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
-
+      
   nginx:
     container_name: nginx
-    image: javieribarra/burger-nginx:latest
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile
     ports:
       - 8000:8000
     depends_on:
@@ -54,5 +61,5 @@ services:
       - web-odoo:web-odoo
 
 volumes:
-  odoo-data:
+  odoo-web-data:
   db-data:
