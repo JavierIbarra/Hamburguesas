@@ -5,6 +5,7 @@ from usermanager.models import Client
 from app.models import Event
 from .utils import Odoo
 
+""" 
 @receiver(post_save, sender=Client)
 def create_client_odoo(sender, instance, created, **kwargs):
     if created:
@@ -29,3 +30,4 @@ def create_crm_odoo(sender, instance, created, **kwargs):
                 'expected_revenue': f'{instance.CuartoDeLibra*5000 +instance.Quinoa*7500 + 30000}',
             }]
         od.CrmCreate(eventRow)
+ """

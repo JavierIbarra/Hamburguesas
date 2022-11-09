@@ -1,6 +1,5 @@
 from dataclasses import field
 from http import client
-from tkinter import Widget
 from urllib import request
 from django import forms
 from .models import Event, Ingredient

@@ -1,49 +1,79 @@
 version: '3.8'
 services:
-  db:
+  db-web:
     image: postgres:latest
-    container_name: db
-    restart: unless-stopped
-    env_file: 
-      - ./db-postgres/docker/.env
+    container_name: db-web
+    volumes:
+      - db-web-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    env_file: 
+      - ./db-postgres/django/.env
+
+  db-odoo:
+    image: postgres:latest
+    container_name: db-odoo
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-odoo-data:/var/lib/postgresql/data
+    expose:
+      - "5433"
+    ports:
+      - 5433:5433
+    command: -p 5433
+    env_file: 
+      - ./db-postgres/odoo/.env
 
   web-django:
     container_name: web-django
-    image: javieribarra/burger-django:latest
+    build: 
+      context: burgers
+      dockerfile: ./Dockerfile
     ports:
       - 8001:8001
     env_file:
       - ./burgers/docker/.env
-    environment:
-      - WEB_PORT=8001
     depends_on:
-      - db
+      - db-web
     links:
       - web-odoo:web-odoo
 
   web-odoo:
     container_name: web-odoo
-    image: javieribarra/burger-odoo:latest
     restart: unless-stopped
+    build: 
+      context: ./odoo/
+      dockerfile: ./Dockerfile
     ports:
       - 8069:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
     env_file:
       - ./odoo/docker/.env
     depends_on:
-      - db
+      - db-odoo
     links:
-      - db:db
-    volumes:
-      - odoo-data:/var/lib/odoo
-    entrypoint: "/usr/bin/odoo -c /etc/odoo/odoo.conf"
+      - db-odoo:db-odoo
 
+  api:
+    container_name: api
+    build: 
+      context: api
+      dockerfile: ./Dockerfile
+    ports:
+      - 8002:8002
+    env_file:
+      - ./api/docker/.env
+    depends_on:
+      - db-web
+      - web-odoo
+    links:
+      - web-odoo:web-odoo
+      
   nginx:
     container_name: nginx
-    image: javieribarra/burger-nginx:latest
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile
     ports:
       - 8000:8000
     depends_on:
@@ -54,5 +84,6 @@ services:
       - web-odoo:web-odoo
 
 volumes:
-  odoo-data:
-  db-data:
+  odoo-web-data:
+  db-odoo-data:
+  db-web-data:
