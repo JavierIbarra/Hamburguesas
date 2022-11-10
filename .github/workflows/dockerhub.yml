@@ -12,7 +12,7 @@ jobs:
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
+      -git
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
@@ -26,6 +26,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:burgers"
+          file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-django:latest
       -
@@ -40,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:odoo"
+          file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-odoo:latest
       -
