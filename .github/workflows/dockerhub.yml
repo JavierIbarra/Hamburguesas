@@ -12,7 +12,7 @@ jobs:
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -git
+      -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
