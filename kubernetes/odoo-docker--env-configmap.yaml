@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  DB_ODOO: odooBurger
+  HOST: db-odoo
+  PASSWORD: Odoo2022
+  PORT: "5433"
+  USER: burger
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-odoo-odoo-docker--env
+  name: odoo-docker--env

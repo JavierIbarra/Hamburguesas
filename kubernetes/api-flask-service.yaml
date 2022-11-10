@@ -6,14 +6,14 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: web-django
-  name: web-django
+    io.kompose.service: api-flask
+  name: api-flask
 spec:
   ports:
-    - name: "8001"
-      port: 8001
-      targetPort: 8001
+    - name: "5000"
+      port: 5000
+      targetPort: 5000
   selector:
-    io.kompose.service: web-django
+    io.kompose.service: api-flask
 status:
   loadBalancer: {}

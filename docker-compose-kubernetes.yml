@@ -18,7 +18,8 @@ services:
     env_file: 
       - ./db-postgres/odoo/.env
     ports:
-      - 5432:5432
+      - 5433:5433
+    command: -p 5433
     volumes:
       - db-odoo-data:/var/lib/postgresql/data
 
@@ -32,9 +33,9 @@ services:
     environment:
       - WEB_PORT=8001
     depends_on:
-      - db
+      - db-web
     links:
-      - web-odoo:web-odoo
+      - db-web:db-web
       - api-flask:api-flask
 
   web-odoo:
@@ -50,7 +51,7 @@ services:
     links:
       - db-odoo:db-odoo
     volumes:
-      - odoo-web-dat:/var/lib/odoo
+      - odoo-web-data:/var/lib/odoo
 
   api-flask:
     container_name: api-flask

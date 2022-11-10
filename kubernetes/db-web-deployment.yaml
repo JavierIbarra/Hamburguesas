@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: web-odoo
-  name: web-odoo
+    io.kompose.service: db-web
+  name: db-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: web-odoo
+      io.kompose.service: db-web
   strategy:
     type: Recreate
   template:
@@ -22,46 +22,41 @@ spec:
         kompose.version: 1.26.1 (a9d05d509)
       creationTimestamp: null
       labels:
-        io.kompose.service: web-odoo
+        io.kompose.service: db-web
     spec:
       containers:
         - env:
-            - name: DB_ODOO
+            - name: PGDATA
               valueFrom:
                 configMapKeyRef:
-                  key: DB_ODOO
-                  name: odoo-docker--env
-            - name: HOST
+                  key: PGDATA
+                  name: db-postgres-django--env
+            - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  key: HOST
-                  name: odoo-docker--env
-            - name: PASSWORD
+                  key: POSTGRES_DB
+                  name: db-postgres-django--env
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: PASSWORD
-                  name: odoo-docker--env
-            - name: PORT
+                  key: POSTGRES_PASSWORD
+                  name: db-postgres-django--env
+            - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  key: PORT
-                  name: odoo-docker--env
-            - name: USER
-              valueFrom:
-                configMapKeyRef:
-                  key: USER
-                  name: odoo-docker--env
-          image: javieribarra/burger-odoo:latest
-          name: web-odoo
+                  key: POSTGRES_USER
+                  name: db-postgres-django--env
+          image: postgres:latest
+          name: db-web
           ports:
-            - containerPort: 8069
+            - containerPort: 5432
           resources: {}
           volumeMounts:
-            - mountPath: /var/lib/odoo
-              name: odoo-web-data
+            - mountPath: /var/lib/postgresql/data
+              name: db-web-data
       restartPolicy: Always
       volumes:
-        - name: odoo-web-data
+        - name: db-web-data
           persistentVolumeClaim:
-            claimName: odoo-web-data
+            claimName: db-web-data
 status: {}
