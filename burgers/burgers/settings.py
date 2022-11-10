@@ -163,8 +163,3 @@ AUTH_USER_MODEL = "usermanager.Client"
 # Auth redirects
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-
-DB_ODOO=env('DB_ODOO')
-USER_ODOO=env('USER_ODOO')
-TOKEN_ODOO=env('TOKEN_ODOO')
-URL_ODOO=env('URL_ODOO')
