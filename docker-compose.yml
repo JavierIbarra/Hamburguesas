@@ -36,6 +36,7 @@ services:
       - db-web
     links:
       - web-odoo:web-odoo
+      - api-flask:api-flask
 
   web-odoo:
     container_name: web-odoo
@@ -54,15 +55,13 @@ services:
     links:
       - db-odoo:db-odoo
 
-  api:
-    container_name: api
+  api-flask:
+    container_name: api-flask
     build:
-      context: api
+      context: api-flask
       dockerfile: ./docker/Dockerfile
     ports:
-      - 8002:8002
-    env_file:
-      - ./api/docker/.env
+      - 5000:5000
     depends_on:
       - db-web
       - web-odoo

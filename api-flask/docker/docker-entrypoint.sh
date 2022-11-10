@@ -2,4 +2,4 @@
 
 # Start server
 echo "Starting server"
-python manage.py runserver $WEB_HOST:$WEB_PORT
+python3 -m flask run --host=0.0.0.0

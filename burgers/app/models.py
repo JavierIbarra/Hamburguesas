@@ -35,7 +35,7 @@ class Event(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
 
     def costo_total(self):
-        costo = 0
+        costo = 1000 * self.attendees
         for ingredient in self.ingredients.all():
             costo += ingredient.unitary_cost * self.attendees
         return costo

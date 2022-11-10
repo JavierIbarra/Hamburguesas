@@ -28,8 +28,6 @@ class ListEventView(LoginMixin, ListView):
         queryset = self.model.objects.filter(client=self.request.user)
         return queryset
 
-    
-
 class CreateEventView(LoginMixin, CreateView):
     model = Event
     form_class = EventForm
