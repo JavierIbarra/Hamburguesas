@@ -4,35 +4,30 @@ from django.urls import reverse_lazy
 from .models import *
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from usermanager.mixins import LoginYSuperStaffMixin, ValidarPermisosMixin, LoginMixin
+from usermanager.mixins import LoginMixin
 from .forms import EventForm, IngredientForm
 
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "home.html"
 
-class ProfilePageView(LoginMixin,ListView):
-    template_name = "client/profile.html"
-    model = Event 
-    context_object_name = 'events'
-
-    def get_queryset(self):
-        queryset = self.model.objects.filter(state=True, client=self.request.user)
-        return queryset
-
-
 class EventsCalendarView(LoginMixin,ListView):
     model = Event
     template_name = 'event/calendar.html'
 
     def get_queryset(self):
-        queryset = self.model.objects.filter(state=True, client=self.request.user)
+        queryset = self.model.objects.filter(status='Accepted')
         return queryset
 
 class ListEventView(LoginMixin, ListView):
-    template_name = 'event/events.html'
-    model = Event
-    context_object_name = 'event_list'
+    template_name = "event/list_events.html"
+    model = Event 
+    context_object_name = 'events'
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(client=self.request.user)
+        return queryset
+
     
 
 class CreateEventView(LoginMixin, CreateView):

@@ -52,7 +52,7 @@ LOCAL_APPS = [
 ]
 
 THIRD_APPS = [
-
+    "django.contrib.humanize",
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS

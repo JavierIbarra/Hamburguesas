@@ -1,19 +1,41 @@
-{% extends 'header_template.html' %}
+{% extends 'base/base_template.html' %}
 {% load static %}
 
 {% block title %}Reservation{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row mt-3 post border form">
-      <div class="col-md-9 mx-auto m-5">
-        <form action="" method="post">
-          {% csrf_token %}
-          <h3 class="mb-4">Create Event</h3>
-          {{form.as_p}}
-          <p><input type="submit" class="btn btn-success btn-block" value="Create"></p>
-        </form>
-      </div>
+  <div class="row mt-3 post border form">
+    <div class="col-md-9 mx-auto m-5">
+      <form action="" method="post">
+        {% csrf_token %}
+        <h3 class="mb-4">Create Event</h3>
+        {{form.as_p}}
+        <p><input type="submit" class="btn btn-success btn-block" value="Create"></p>
+      </form>
     </div>
   </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  function addHours(numOfHours, date = new Date()) {
+    date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
+
+    return date;
+  }
+
+  var datetime = addHours(48);
+  document.getElementById("start_date").min = datetime.toISOString().substring(0, 16);
+
+  start_date.addEventListener("input", () => {
+    var min_end_date = document.getElementById("start_date").value
+    var date = new Date(min_end_date);
+    document.getElementById("end_date").min = date.toISOString().substring(0, 16);
+    date = addHours(7, date);
+    document.getElementById("end_date").max = date.toISOString().substring(0, 16);
+  })
+</script>
+
 {% endblock %}

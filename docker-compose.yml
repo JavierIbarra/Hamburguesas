@@ -7,7 +7,7 @@ services:
       - db-web-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    env_file: 
+    env_file:
       - ./db-postgres/django/.env
 
   db-odoo:
@@ -20,12 +20,12 @@ services:
     ports:
       - 5433:5433
     command: -p 5433
-    env_file: 
+    env_file:
       - ./db-postgres/odoo/.env
 
   web-django:
     container_name: web-django
-    build: 
+    build:
       context: burgers
       dockerfile: ./Dockerfile
     ports:
@@ -40,7 +40,7 @@ services:
   web-odoo:
     container_name: web-odoo
     restart: unless-stopped
-    build: 
+    build:
       context: ./odoo/
       dockerfile: ./Dockerfile
     ports:
@@ -56,9 +56,9 @@ services:
 
   api:
     container_name: api
-    build: 
+    build:
       context: api
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - 8002:8002
     env_file:
@@ -68,7 +68,7 @@ services:
       - web-odoo
     links:
       - web-odoo:web-odoo
-      
+
   nginx:
     container_name: nginx
     build:

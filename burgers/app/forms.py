@@ -9,7 +9,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ["title","address", "CuartoDeLibra","Quinoa","attendees", "start_date", "end_date"] 
+        fields = ["title","address", "ingredients", "attendees", "start_date", "end_date"] 
         widgets = {
             "title": forms.TextInput(
                 attrs={"class": "form-control"}
@@ -19,19 +19,11 @@ class EventForm(forms.ModelForm):
                     "class": "form-control",
                 }
             ),
-            "CuartoDeLibra": forms.NumberInput(
+            "ingredients": forms.SelectMultiple(
                 attrs={
                     "class": "form-control", 
-                    "min": 0,
                 }
             ),
-            "Quinoa": forms.NumberInput(
-                attrs={
-                    "class": "form-control", 
-                    "min": 0,
-                }
-            ),
-            
             "attendees": forms.NumberInput(
                 attrs={
                     "class": "form-control", 
@@ -39,11 +31,11 @@ class EventForm(forms.ModelForm):
                 }
             ),
             "start_date": forms.DateInput(
-                attrs={"type": "datetime-local", "class": "form-control"},
+                attrs={"type": "datetime-local", "class": "form-control", "id":"start_date"},
                 format="%Y-%m-%dT%H:%M",
             ),
             "end_date": forms.DateInput(
-                attrs={"type": "datetime-local", "class": "form-control"},
+                attrs={"type": "datetime-local", "class": "form-control", "id":"end_date"},
                 format="%Y-%m-%dT%H:%M",
             ),
         }
@@ -51,28 +43,12 @@ class EventForm(forms.ModelForm):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ["name","image","description","measurement","unitary_cost","avg_consumption_pp"]
+        fields = ["name","image", "unitary_cost"]
         widgets = {
             "name": forms.TextInput(
                 attrs={"class": "form-control"}
             ),
-            "description": forms.TextInput(
-                attrs={"class": "form-control"}
-            ),
-            "measurement": forms.Select(
-                attrs={
-                    "choice": "Kg", 
-                    "class":"form-control", 
-                    "choices": Ingredient.MEASUREMENT_CHOICES
-                    }
-            ),
             "unitary_cost":forms.NumberInput(
-                attrs={
-                    "class": "form-control", 
-                    "min": 0,
-                }
-            ),
-            "avg_consumption_pp":forms.NumberInput(
                 attrs={
                     "class": "form-control", 
                     "min": 0,
