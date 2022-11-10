@@ -42,3 +42,11 @@ jobs:
           context: "{{defaultContext}}:odoo"
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-odoo:latest
+      -
+        name: Build and push docker api-flask
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:api-flask"
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-api-flask:latest

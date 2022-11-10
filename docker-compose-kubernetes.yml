@@ -1,0 +1,81 @@
+version: '3.8'
+services:
+  db-web:
+    image: postgres:latest
+    container_name: db-web
+    restart: unless-stopped
+    env_file: 
+      - ./db-postgres/django/.env
+    ports:
+      - 5432:5432
+    volumes:
+      - db-web-data:/var/lib/postgresql/data
+
+  db-odoo:
+    image: postgres:latest
+    container_name: db-odoo
+    restart: unless-stopped
+    env_file: 
+      - ./db-postgres/odoo/.env
+    ports:
+      - 5432:5432
+    volumes:
+      - db-odoo-data:/var/lib/postgresql/data
+
+  web-django:
+    container_name: web-django
+    image: javieribarra/burger-django:latest
+    ports:
+      - 8001:8001
+    env_file:
+      - ./burgers/docker/.env
+    environment:
+      - WEB_PORT=8001
+    depends_on:
+      - db
+    links:
+      - web-odoo:web-odoo
+      - api-flask:api-flask
+
+  web-odoo:
+    container_name: web-odoo
+    image: javieribarra/burger-odoo:latest
+    restart: unless-stopped
+    ports:
+      - 8069:8069
+    env_file:
+      - ./odoo/docker/.env
+    depends_on:
+      - db-odoo
+    links:
+      - db-odoo:db-odoo
+    volumes:
+      - odoo-web-dat:/var/lib/odoo
+
+  api-flask:
+    container_name: api-flask
+    image: javieribarra/burger-api-flask:latest
+    ports:
+      - 5000:5000
+    depends_on:
+      - db-web
+      - web-odoo
+    links:
+      - web-odoo:web-odoo
+
+  nginx:
+    container_name: nginx
+    image: javieribarra/burger-nginx:latest
+    ports:
+      - 8000:8000
+    depends_on:
+      - web-django
+      - web-odoo
+    links:
+      - web-django:web-django
+      - web-odoo:web-odoo
+
+volumes:
+  odoo-web-data:
+  db-odoo-data:
+  db-web-data:

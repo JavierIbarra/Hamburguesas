@@ -1,0 +1,85 @@
+{% extends "base/base_template.html" %}
+{% block content %}
+{% load humanize %}
+<div class="container">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://simg.nicepng.com/png/small/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"
+                    class="img-fluid rounded-start" alt="user">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">PROFILE</h5>
+                    <p class="card-text"><strong>User name</strong><br>
+                        {{user.first_name}} {{user.last_name}}</p>
+                    <p class="card-text"><strong>Email</strong><br>
+                        {{user.email}}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h5>Upcoming events</h5>
+                        </div>
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{% url 'create_event' %}" class="btn btn-success">Create event
+                                <i class='bx bxs-add-to-queue'></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-bordered datatable dataTable no-footer"
+                        id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info"
+                        style="border-collapse: collapse !important">
+                        <thead>
+                            <tr role="row">
+                                <th>Title</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Address</th>
+                                <th>Attendees</th>
+                                <th>Status</th>
+                                <th>Cost</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for event in events%}
+                            <tr>
+                                <td>{{event.title}}</td>
+                                <td>{{event.start_date}}</td>
+                                <td>{{event.end_date}}</td>
+                                <td>{{event.address}}</td>
+                                <td>{{event.attendees}}</td>
+                                <td>{{event.status}}</td>
+                                <td>${{event.costo_total | intcomma }}</td>
+                                <td>
+                                    <a href="{% url 'update_event' event.id %}" title="update">
+                                        <i class='bx bxs-edit-alt'></i>
+                                    </a>
+                                    <a href="{% url 'delete_event' event.id %}" title="delete">
+                                        <i class='bx bxs-trash-alt'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

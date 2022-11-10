@@ -10,7 +10,6 @@ urlpatterns = [
     path('events/add/', CreateEventView.as_view(), name='create_event'),
     path('<int:pk>/update/',UpdateEventView.as_view(), name='update_event'),
     path('<int:pk>/delete/',DeleteEventView.as_view(), name='delete_event'),
-    path('profile/', ProfilePageView.as_view(), name='profile'),
     path('ingredients/', ListIngredientView.as_view(), name='ingredients'),
     path('ingredients/add/',CreateIngredientView.as_view(), name='create_ingredient'),
     #path('<int:pk>/update/',UpdateIngredientView.as_view(), name='update_ingredient'),
