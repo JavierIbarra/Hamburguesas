@@ -13,6 +13,9 @@ spec:
     - name: "8001"
       port: 8001
       targetPort: 8001
+    - name: 8001-tcp
+      port: 8001
+      targetPort: 8001
   selector:
     io.kompose.service: web-django
 status:

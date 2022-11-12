@@ -1,17 +1,14 @@
-resource "aws_s3_bucket" "iaps_bucket"{
-    bucket = "burger-iaps-bucket"
+
+provider "aws" {
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
-
-module "container-server" {
-  source = "../.."
-
-  domain = "app.${var.domain}"
-  email  = var.email
-
-  container = {
-    image = "nginxdemos/hello"
-  }
+ resource "aws_instance" "ec2" {
+    ami = "ami-08c40ec9ead489470"
+    instance_type = "t2.micro"
+    subnet_id = "subnet-025e03e4152467c2d"
 }
 
 /* Instance ----------------------------------------------------------------- */
