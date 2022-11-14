@@ -5,7 +5,7 @@ from .models import *
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from usermanager.mixins import LoginMixin
-from .forms import EventForm, IngredientForm, OrderItemForm
+from .forms import EventForm, IngredientForm
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -32,7 +32,7 @@ class CreateEventView(LoginMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event/create_event.html'
-    success_url = reverse_lazy('order_list')
+    success_url = reverse_lazy('calendar')
     #success_url = reverse_lazy('event_ingredients')
 
     def form_valid(self, form):
@@ -65,23 +65,3 @@ class CreateIngredientView(LoginMixin, CreateView):
     def form_valid(self, form):
         form.instance.client = self.request.user
         return super().form_valid(form)
-class OrderItemView(LoginMixin, CreateView):
-    model = OrderItem
-    template_name = "order_list.html"
-    success_url='order_list'
-    form_class = OrderItemForm
-    context_object_name = 'all_ingredients' 
-
-    def get_queryset():
-        return Ingredient.objects.all()
-
-class AddToCartView(LoginMixin, CreateView):
-    model = Event
-    template_name = "order_list.html"
-    success_url='order_list'
-    context_object_name = 'ingredients_list'
-    def create(self):
-        event = Event
-        oi = OrderItem
-        oi.product= Ingredient
-        event.items.add(oi)

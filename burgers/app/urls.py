@@ -12,8 +12,6 @@ urlpatterns = [
     path('<int:pk>/delete/',DeleteEventView.as_view(), name='delete_event'),
     path('ingredients/', ListIngredientView.as_view(), name='ingredients'),
     path('ingredients/add/',CreateIngredientView.as_view(), name='create_ingredient'),
-    path('ordetItem',OrderItemView.as_view(), name = 'order_list'),
-    path('add_to_cart/<int:pk>',AddToCartView.as_view(),name = "add_to_cart"),
     #path('<int:pk>/update/',UpdateIngredientView.as_view(), name='update_ingredient'),
     #path('<int:pk>/delete/',DeleteIngredientView.as_view(), name='delete_ingredient'),
 ]

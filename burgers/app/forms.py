@@ -2,14 +2,18 @@ from dataclasses import field
 from http import client
 from urllib import request
 from django import forms
-from .models import Event, Ingredient,OrderItem
+from .models import Event, Ingredient
 import datetime
 
 class EventForm(forms.ModelForm):
-
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),
+        widget= forms.CheckboxSelectMultiple,
+        required = False
+    )
     class Meta:
         model = Event
-        fields = ["title","address", "ingredients", "attendees", "start_date", "end_date"] 
+        fields = ["title","address","ingredients", "attendees", "start_date", "end_date"]
         widgets = {
             "title": forms.TextInput(
                 attrs={"class": "form-control"}
@@ -19,11 +23,7 @@ class EventForm(forms.ModelForm):
                     "class": "form-control",
                 }
             ),
-            "ingredients": forms.SelectMultiple(
-                attrs={
-                    "class": "form-control", 
-                }
-            ),
+
             "attendees": forms.NumberInput(
                 attrs={
                     "class": "form-control", 
@@ -39,6 +39,7 @@ class EventForm(forms.ModelForm):
                 format="%Y-%m-%dT%H:%M",
             ),
         }
+    
 
 class IngredientForm(forms.ModelForm):
     class Meta:
@@ -54,17 +55,4 @@ class IngredientForm(forms.ModelForm):
                     "min": 0,
                 }
             ),
-        }
-class OrderItemForm(forms.ModelForm):
-    class Meta:
-        model = OrderItem
-        fields =["count"]
-        widgets = {
-            "count": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "min": 0
-                }
-                
-            )
         }
