@@ -8,4 +8,6 @@ COPY ./config /etc/odoo
 COPY ./docker/docker-entrypoint.sh entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+USER odoo
+
 ENTRYPOINT [ "/entrypoint.sh" ]
