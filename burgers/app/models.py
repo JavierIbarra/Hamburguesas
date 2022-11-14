@@ -15,7 +15,12 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return str(self.name) + " $" + str(self.unitary_cost) + " cost per unit." 
+class OrderItem(models.Model):
+    product=models.OneToOneField(Ingredient,on_delete=models.CASCADE)
+    count = models.IntegerField(validators=[MinValueValidator(0)])
 
+    def __str__(self):
+        return str(self.product) + str(self.count)
 
 class Event(models.Model):
     MEASUREMENT_CHOICES = [
@@ -26,7 +31,8 @@ class Event(models.Model):
     ]
     title = models.CharField(max_length = 200, blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    ingredients = models.ManyToManyField(Ingredient)
+    ingredients = models.ManyToManyField(Ingredient,null=True)
+    items = models.ManyToManyField(OrderItem,null=True )
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     status = models.CharField(max_length=10, choices=MEASUREMENT_CHOICES, default='Created')
@@ -40,5 +46,9 @@ class Event(models.Model):
             costo += ingredient.unitary_cost * self.attendees
         return costo
 
+    def get_cart(self):
+        return self.items.all()
+    def get_cart_total(self):
+        return sum([item.product.unitary_cost for item in self.items.all()])
     def __str__(self):
         return str(self.title)

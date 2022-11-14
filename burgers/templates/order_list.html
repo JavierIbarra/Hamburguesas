@@ -1,0 +1,14 @@
+{% extends "base/base_template.html" %}
+{% block content %}
+{% load humanize %}
+<div class="row">
+    {% for ingr in ingredients.all%}
+    <div class = "col-sm-3">
+        <p>{{ingr.name}}</p>
+        <p>{{ingr.unitary_cost}}</p>
+        {{form.as_p}}
+    </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}

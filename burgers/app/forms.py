@@ -2,7 +2,7 @@ from dataclasses import field
 from http import client
 from urllib import request
 from django import forms
-from .models import Event, Ingredient
+from .models import Event, Ingredient,OrderItem
 import datetime
 
 class EventForm(forms.ModelForm):
@@ -54,4 +54,17 @@ class IngredientForm(forms.ModelForm):
                     "min": 0,
                 }
             ),
+        }
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields =["count"]
+        widgets = {
+            "count": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 0
+                }
+                
+            )
         }
