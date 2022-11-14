@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
         kompose.version: 1.26.1 (a9d05d509)
       creationTimestamp: null
       labels:
@@ -30,11 +30,6 @@ spec:
                 configMapKeyRef:
                   key: ALLOWED_HOSTS
                   name: burgers-docker--env
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: DATABASE_NAME
-                  name: burgers-docker--env
             - name: DATABASE_URL
               valueFrom:
                 configMapKeyRef:
@@ -44,16 +39,6 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: DEBUG
-                  name: burgers-docker--env
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  key: POSTGRES_PASSWORD
-                  name: burgers-docker--env
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: POSTGRES_USER
                   name: burgers-docker--env
             - name: SECRET_KEY
               valueFrom:
@@ -66,7 +51,10 @@ spec:
                   key: WEB_HOST
                   name: burgers-docker--env
             - name: WEB_PORT
-              value: "8001"
+              valueFrom:
+                configMapKeyRef:
+                  key: WEB_PORT
+                  name: burgers-docker--env
           image: javieribarra/burger-django:latest
           name: web-django
           ports:

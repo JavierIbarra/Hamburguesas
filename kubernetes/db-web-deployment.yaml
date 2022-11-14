@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: db-web
+  name: db-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: db-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: db-web
+    spec:
+      containers:
+        - env:
+            - name: PGDATA
+              valueFrom:
+                configMapKeyRef:
+                  key: PGDATA
+                  name: db-postgres-django--env
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: db-postgres-django--env
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: db-postgres-django--env
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: db-postgres-django--env
+          image: postgres:latest
+          name: db-web
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-web-data
+      restartPolicy: Always
+      volumes:
+        - name: db-web-data
+          persistentVolumeClaim:
+            claimName: db-web-data
+status: {}

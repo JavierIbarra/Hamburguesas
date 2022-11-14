@@ -1,9 +1,15 @@
 # Hamburguesas
 
+## Jira
+
+       https://burgas.atlassian.net/jira/software/projects/HAM/boards/1
+
 ## Running using local kubernetes
 
        kind create cluster
-       sh kubernetes/kubernetes.sh
+       kubectl apply -f ./kubernetes
+       kubectl apply -f ./kubernetes/nginx
+       kubectl port-forward svc/nginx 8000:8000
 
 ## Running using docker
 

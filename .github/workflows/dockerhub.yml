@@ -26,6 +26,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:burgers"
+          file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-django:latest
       -
@@ -40,5 +41,14 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:odoo"
+          file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-odoo:latest
+      -
+        name: Build and push docker api-flask
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:api-flask"
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/burger-api-flask:latest

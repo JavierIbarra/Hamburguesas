@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
@@ -13,11 +13,12 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: web-odoo
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.cmd: kompose convert -f ../docker-compose-kubernetes.yml
         kompose.version: 1.26.1 (a9d05d509)
       creationTimestamp: null
       labels:
@@ -25,16 +26,42 @@ spec:
     spec:
       containers:
         - env:
+            - name: DB_ODOO
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_ODOO
+                  name: odoo-docker--env
             - name: HOST
-              value: db
+              valueFrom:
+                configMapKeyRef:
+                  key: HOST
+                  name: odoo-docker--env
             - name: PASSWORD
-              value: myburger
+              valueFrom:
+                configMapKeyRef:
+                  key: PASSWORD
+                  name: odoo-docker--env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT
+                  name: odoo-docker--env
             - name: USER
-              value: burger
+              valueFrom:
+                configMapKeyRef:
+                  key: USER
+                  name: odoo-docker--env
           image: javieribarra/burger-odoo:latest
           name: web-odoo
           ports:
             - containerPort: 8069
           resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/odoo
+              name: odoo-web-data
       restartPolicy: Always
+      volumes:
+        - name: odoo-web-data
+          persistentVolumeClaim:
+            claimName: odoo-web-data
 status: {}
