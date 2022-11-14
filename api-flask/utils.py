@@ -14,7 +14,13 @@ class Odoo():
                             "args": ["odooBurger", 2, "admin", "product.product", "search", [], []]
                         }
                     }
-        response = requests.post(self.url, json = json_sent)
+
+        try:
+            response = requests.post(self.url, json = json_sent)
+        except:
+            response = {'message':'connection error'}
+            return response
+            
         json = []
         for product in response.json()['result']:
             new_product={}
@@ -35,8 +41,13 @@ class Odoo():
                             "args": ["odooBurger", 2, "admin", "res.partner", "search_read", [["email", "=", partnerEmail]], []]
                         }
                     }
-        response = requests.post(self.url, json = json_sent)
-        return response.json()['result'][0]['id']
+        try:
+            response = requests.post(self.url, json = json_sent)
+            return response.json()['result'][0]['id']
+        except:
+            response = {'message':'connection error'}
+            return response
+        
 
     def create_contact(self, name, phone, email):
         json_sent = {
@@ -53,7 +64,10 @@ class Odoo():
                             }]
                         }
                     }
-        response = requests.post(self.url, json = json_sent)
+        try:
+            response = requests.post(self.url, json = json_sent)
+        except:
+            response = {'message':'connection error'}
         return response
         
 
@@ -75,5 +89,8 @@ class Odoo():
                                 }]
                         }
                     }
-        response = requests.post(self.url, json = json_sent)
+        try:
+            response = requests.post(self.url, json = json_sent)
+        except:
+            response = {'message':'connection error'}
         return response

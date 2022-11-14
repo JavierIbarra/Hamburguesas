@@ -3,6 +3,10 @@ from utils import Odoo
 
 app = Flask(__name__)
 
+@app.route('/')
+def getActive():
+    return jsonify({'message':'ok'})
+
 @app.route('/products')
 def getProduct():
     odoo = Odoo()
